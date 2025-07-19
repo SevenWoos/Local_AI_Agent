@@ -1,5 +1,6 @@
 from langchain_ollama.llms import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
+from vector import retriever
 
 
 model = OllamaLLM(model="llama3.2")
@@ -21,5 +22,8 @@ while True:
     if question == 'q':
         break
     
+    # Use retriever to grab relevant reviews and pass those reviews as a parameter to our prompt
+    reviews = retriever.invoke(question)
+
     result = chain.invoke({"reviews": [], "question": question})
     print(result)
